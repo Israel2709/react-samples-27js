@@ -1,110 +1,43 @@
 import { useState } from "react";
 import "./App.css";
-import ExchangeResult from "./Components/ExchangeResult";
-import AmountForm from "./Components/AmountForm";
+import Title from "./Components/Title";
+import Field from "./Components/Field";
 
 function App() {
-  const [amount, setAmount] = useState("");
-  const [currency, setCurrency] = useState("USD");
-  const [exchangeHistory, setExchangeHistory] = useState([]);
+  const [text, setText] = useState("");
 
-  const currencyMap = {
-    USD: 16.74,
-    EUR: 18.3,
-    GBP: 21.31,
+  const titleHandler = (event) => {
+    setText(event.target.value);
   };
 
-  const amountHandler = (event) => {
-    const value = Number(event.target.value);
-    setAmount(value);
-  };
-
-  const currencyHandler = (event) => {
-    const value = event.target.value;
-    console.log(value);
-    setCurrency(value);
-  };
-
-  const saveExchange = () => {
-    const item = `${amount} MXN -> ${calculateExchange(
-      amount,
-      currency
-    )} ${currency}`;
-    setExchangeHistory([...exchangeHistory, item]);
-    setAmount(0);
-  };
-
-  const calculateExchange = (amount, currency) =>
-    amount / currencyMap[currency];
+  const koders = [
+    { id: 1, name: "koder1" },
+    { id: 2, name: "koder2" },
+    { id: 3, name: "koder3" },
+  ];
 
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-6">
-            <AmountForm inputHandler={amountHandler} />
-            <h1>Selecciona la divisa a la que quieres convertir el monto:</h1>
-            <div className="card">
-              <div className="card-body">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="currency"
-                    id="USD"
-                    value="USD"
-                    checked={currency === "USD"}
-                    onChange={currencyHandler}
-                  />
-                  <label className="form-check-label" for="USD">
-                    USD
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="currency"
-                    id="EUR"
-                    value="EUR"
-                    checked={currency === "EUR"}
-                    onChange={currencyHandler}
-                  />
-                  <label className="form-check-label" for="EUR">
-                    EUR
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="currency"
-                    id="GBP"
-                    value="GBP"
-                    checked={currency === "GBP"}
-                    onChange={currencyHandler}
-                  />
-                  <label className="form-check-label" for="GBP">
-                    GBP
-                  </label>
-                </div>
-              </div>
-            </div>
+            <Field fieldHandler={titleHandler} />
+            <ul className="list-group">
+              {koders.map((koder) => (
+                <li key={koder.id} className="list-group-item">
+                  {koder.name}
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="col-12 col-md-6">
-            <ExchangeResult
-              result={calculateExchange(amount, currency)}
-              currency={currency}
-            />
-            <button className="btn btn-primary" onClick={saveExchange}>
-              Guardar conversión
-            </button>
-            <hr />
-            <ul className="list-group">
-              {exchangeHistory.map((item) => {
-                return <li className="list-group-item">{item}</li>;
-              })}
-            </ul>
+            {text === "" ? (
+              <div className="alert alert-info" role="alert">
+                No tenemos título
+              </div>
+            ) : (
+              <Title text={text} />
+            )}
           </div>
         </div>
       </div>
