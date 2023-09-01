@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import ExchangeResult from "./Components/ExchangeResult";
+import AmountForm from "./Components/AmountForm";
 
 function App() {
   const [amount, setAmount] = useState("");
@@ -41,20 +42,7 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-6">
-            <h1>Ingresa el monto a convertir en MXN</h1>
-            <form
-              action=""
-              className="border rounded border-secondary shadow p-3"
-            >
-              <div className="form-group">
-                <input
-                  type="number"
-                  className="form-control"
-                  onChange={amountHandler}
-                  value={amount}
-                />
-              </div>
-            </form>
+            <AmountForm inputHandler={amountHandler} />
             <h1>Selecciona la divisa a la que quieres convertir el monto:</h1>
             <div className="card">
               <div className="card-body">
